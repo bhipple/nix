@@ -4,8 +4,9 @@
 #include "json.hh"
 #include "common-args.hh"
 
-#include <iomanip>
 #include <algorithm>
+#include <boost/format.hpp>
+#include <iomanip>
 
 using namespace nix;
 
@@ -71,16 +72,16 @@ struct CmdPathInfo : StorePathsCommand, MixJSON
             return;
         }
 
-        static constexpr std::array<char, 6> idents = {
-            ' ', 'K', 'M', 'G', 'T', 'P'
+        static constexpr std::array<char, 9> idents = {
+            ' ', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'
         };
         size_t power = 0;
         double res = value;
-        while (res > 1024) {
+        while (res > 1024 && power < idents.size()) {
             ++power;
             res /= 1024;
         }
-        std::cout << '\t' << std::setw(11) << std::setprecision(3) << res << idents[power];
+        std::cout << '\t' << std::setw(11) << boost::format("%.3f") % res << idents[power];
     }
 
     void run(ref<Store> store, Paths storePaths) override
