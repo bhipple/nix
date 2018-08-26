@@ -81,7 +81,7 @@ struct CmdPathInfo : StorePathsCommand, MixJSON
             ++power;
             res /= 1024;
         }
-        std::cout << '\t' << boost::format("%11.3f") % res << idents[power];
+        std::cout << '\t' << boost::format("%11.1f") % res << idents[power];
     }
 
     void run(ref<Store> store, Paths storePaths) override
