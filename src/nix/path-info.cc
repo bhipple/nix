@@ -68,7 +68,7 @@ struct CmdPathInfo : StorePathsCommand, MixJSON
     void printSize(int value)
     {
         if (!humanReadable) {
-            std::cout << '\t' << std::setw(11) << value;
+            std::cout << '\t' << boost::format("%11d") % value;
             return;
         }
 
@@ -81,7 +81,7 @@ struct CmdPathInfo : StorePathsCommand, MixJSON
             ++power;
             res /= 1024;
         }
-        std::cout << '\t' << std::setw(11) << boost::format("%.3f") % res << idents[power];
+        std::cout << '\t' << boost::format("%11.3f") % res << idents[power];
     }
 
     void run(ref<Store> store, Paths storePaths) override
